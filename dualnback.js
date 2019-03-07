@@ -55,13 +55,11 @@ Model = function(n) {
         hx = history[x]; /* Most recent occurence. */ 
         hn = history[i]; /* N-back occurence (one ahead). */
 
-        if (hn === null)
+        if (hn === null) {
             return false;
+        }
 
-        hx = history[x][type];
-        hy = history[y][type];
-
-        return (hy === hx);
+        return (hx[type] === hn[type]);
     };
 
     match = function(type) {
