@@ -6,10 +6,12 @@
  *             on update() to show the current state of the game.
  */
 
-View = function(model) {
+View = function(config,model) {
     return {update:function() {
         // TODO(Adam): Generate(?) and update view-related html.
     }};
+
+    // NOTE(Adam): The view could have a "static" function for reading configuration.
 };
 
 Model = function(n) {
@@ -152,10 +154,11 @@ Game = function() {
         stop();
 
         // TODO(Adam): Load configuration from input-forms.
+        //             Should the view access these forms?
 
         config  = loadConfigFromInputForms();
         model   = Model(config)
-        view    = View(config)
+        view    = View(config,model)
     };
 
     /* Event listener (captured by start() and stop()) */
