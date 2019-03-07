@@ -66,9 +66,9 @@ Model = function(n) {
 
         if (!hasMatched[type]) {
             if (isMatch(type)) {
-                stats.score[type] += 1;
+                stats.hits[type] += 1;
             } else {
-                stats.error[type] += 1;
+                stats.strikes[type] += 1;
             }
             hasMatched[type] = true;
         }
@@ -91,22 +91,25 @@ Model = function(n) {
      */
 
     update = function() {
+        random = function(k) {
+            return Math.trunc(Math.random() * k);
+        };
         generate = function() {
-            random = function(k) {
-                return Math.trunc(Math.random() * k);
-            };
-
             snd = random(NBR_SND);
             pos = random(NBR_POS);
 
             return [snd,pos];
         };
 
-        hasMatched[SND] = false;
-        hasMatched[POS] = false;
-        history[i]      = generate();
+        history[i] = generate();
+        i          = (i + 1) % n;
 
-        i = (i + 1) % n;
+        for (var type = 0; type < 2; ++type) {
+            if (isMatch(type)) {
+                stats.occurrences[type] += 1;
+            }
+            hasMatched[type] = false;
+        }
     };
 
     /* Expose functions for retrieving the current stats. */
